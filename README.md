@@ -17,96 +17,92 @@
 Hi — I’m Dimpesh Panwar 👋
 Welcome to the C Language Programs repo for Hacktoberfest 2025! This repo is all about small, well-documented C programs that help beginners learn and contributors practice open-source collaboration.
 
-What I’m looking for
+# What I'm Looking For
 
-- Follow my GitHub account ✅
+- **Follow my GitHub account** ✅  
+- **Fork this repository** and create a **unique Pull Request (PR)** — avoid duplicating existing solutions.  
+- **Clear and Documented Code:** PRs with well-written code, meaningful comments, and a short description are more likely to be accepted.  
+- **Beginner-Friendly & Educational:** Keep your contributions accessible and helpful for beginners.
 
-- Fork this repo and create a unique Pull Request (PR) — don’t duplicate existing solutions.
+1. ⭐ **Follow my GitHub account**  
+2. 🍴 **Fork this repository**  
+3. 🔀 **Create a new branch**  : git checkout -b feature/your-short-title
 
-- PRs with clear code, comments, and a short description are more likely to be accepted.
+✍️ **Add your C program** inside a descriptive folder  
+*Example:* `sorting/quick_sort.c`
 
-- Keep entries beginner-friendly and educational.
+📝 **Include a short README or comment at the top of your file** containing:  
+- **Program name**  
+- **Problem statement**  
+- **Input / Output examples**  
+- **Complexity** (if applicable)  
 
-Contribution quick-start
 
-- ⭐ Follow my account on GitHub
+🔁 **Commit with a meaningful message**  
+```bash
+git commit -m "Add: bubble sort with explanation"
+```
+📤 **Push your branch and open a PR** to `main` with a clear title and description  
 
-- 🍴 Fork this repository
+✅ **Ensure your PR is unique** — check existing files before adding
 
-- 🔀 Create a new branch: git checkout -b feature/your-short-title
 
-- ✍️ Add your C program inside a descriptive folder (example: sorting/quick_sort.c)
+# Pull Request (PR) Checklist & Code Style Guidelines
 
-- 📝 Add a short README or comment at the top of your file:
+Before submitting your pull request, please ensure the following:
 
-- Program name
+## PR Checklist
 
-- Problem statement
+- ✅ **Program compiles successfully** with `gcc`  
+  *Mention the exact command used, e.g.:* `gcc -o program program.c`
 
-- Input / Output examples
+- ✅ **File placement & naming**:  
+  Place your file in an appropriate folder and give it a clear, descriptive name.  
+  *Example:* `math/fibonacci_iterative.c`
 
-- Complexity (if applicable)
+- ✅ **Examples provided**:  
+  Include a couple of input/output examples in comments at the top of your file or in a small README.
 
-- 🔁 Commit with a meaningful message: git commit -m "Add: bubble sort with explanation"
+- ✅ **No duplicates**:  
+  Make sure the solution does not already exist in the repository.
 
-- 📤 Push and open a PR to main with a clear title and description
+- ✅ **PR description**:  
+  Add a short, clear description of your approach in the PR body.
 
-- ✅ Ensure your PR is unique — check existing files before adding
+## Code Style & Conventions
 
-- PR checklist (please include)
+- Use **clear and descriptive variable names**.  
+- Include **meaningful comments** explaining your code.  
+- Keep **functions short and focused** on a single task.  
+- Prefer **standard I/O** (`scanf`/`printf`) for examples.  
+- If your program uses **advanced features**, briefly explain them at the top of the file.  
 
--  Program compiles with gcc (mention the command used)
+# Ideas to Contribute
 
--  File placed in an appropriate folder and named clearly (e.g., math/fibonacci_iterative.c)
+Here are some ways you can contribute to the repository:
 
--  A couple of example inputs & outputs in comments or small README
+- **Classic algorithms** (sorting, searching)  
+- **Number theory** (GCD, prime checks)  
+- **Data structures** (linked list, stack, queue)  
+- **Small games** (e.g., tic-tac-toe CLI)  
+- **Problem-solving examples** (recursion, dynamic programming basics)  
+- **Useful utilities** (file I/O examples)
 
--  No duplicate solution already in repo
+# New Example Programs Added in This Branch
 
--  Short description of the approach in the PR body
+- `file_io_examples.c` — demonstrates basic file read/write using `fopen`, `fgets`, and `fprintf`.  
+- `dynamic_array.c` — simple vector-like dynamic array with push and automatic resizing.  
+- `linked_list_example.c` — singly linked list with insert, delete, and print functions.  
+- `bst_example.c` — binary search tree with insert and inorder traversal.  
 
-- Style & conventions
+# License
 
-- Use clear variable names and comments.
+Contributions should be compatible with an open-source license.  
+This repository uses the **MIT License** unless otherwise noted.
 
-- Keep functions short and focused.
+# Contact / Questions
 
-- Prefer standard I/O (scanf/printf) for examples.
+- If you have any questions or need feedback, **open an issue** or **mention me in your PR**.  
+- I’ll review and accept **unique, well-documented contributions**.  
 
-- If your program uses advanced features, briefly explain them at the top.
-
-Ideas to contribute
-
-- Classic algorithms (sorting, searching)
-- Number theory (GCD, prime checks)
-- Data structures (linked list, stack, queue)
-- Small games (tic-tac-toe CLI)
-- Problem-solving examples (recursion, DP basics)
-- Useful utilities (file I/O examples)
-
-New example programs added in this branch:
-
-- `file_io_examples.c` — shows basic file write/read using fopen/fgets/fprintf.
-- `dynamic_array.c` — simple vector-like dynamic array with push and resizing.
-- `linked_list_example.c` — singly linked list with insert, delete, and print.
-- `bst_example.c` — binary search tree insert + inorder traversal.
-
-- Classic algorithms (sorting, searching)
-
-- Number theory (GCD, prime checks)
-
-- Data structures (linked list, stack, queue)
-
-- Small games (tic-tac-toe CLI)
-
-- Problem-solving examples (recursion, DP basics)
-
-- Useful utilities (file I/O examples)
-
-License
-
-Contributions should be compatible with an open-source license. This repo uses MIT License unless otherwise noted.
-
-Contact / Questions
-
-Open an issue or mention me in the PR if you need feedback. I’ll review and accept unique, well-documented contributions. Happy coding — let’s make Hacktoberfest 2025 awesome! 🚀
+Happy coding — let’s make **Hacktoberfest 2025** awesome! 🚀
