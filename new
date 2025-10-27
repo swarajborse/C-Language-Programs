@@ -1,0 +1,2 @@
+int level = score / 50 + 1;
+Sleep(150 - level * 10); // Faster as level increases
