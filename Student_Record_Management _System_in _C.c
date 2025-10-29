@@ -11,7 +11,6 @@ struct Student {
     char grade;
 };
 
-// Function declarations
 void addRecord();
 void displayRecords();
 void searchRecord();
