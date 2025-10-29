@@ -1,57 +1,76 @@
-"""
-Activity Selection Problem - Greedy Algorithm Implementation
+#include <stdio.h>
 
-The activity selection problem is a classic example of a greedy algorithm.
-Given a set of activities with start and finish times, find the maximum
-number of activities that can be performed by a single person, assuming
-that a person can only work on a single activity at a time.
-"""
+// Structure to represent an activity
+typedef struct {
+    int index;
+    int start;
+    int finish;
+} Activity;
 
-def activity_selection(start_times, finish_times):
-    """
-    Find the maximum number of activities that can be performed.
-    
-    Args:
-        start_times: List of start times for each activity
-        finish_times: List of finish times for each activity
-        
-    Returns:
-        List of indices of selected activities
-    """
-    # Create a list of activities with their start and finish times
-    activities = list(zip(range(len(start_times)), start_times, finish_times))
-    
-    # Sort activities by finish time
-    activities.sort(key=lambda x: x[2])
-    
-    # Select the first activity
-    selected = [activities[0][0]]
-    last_finish_time = activities[0][2]
-    
-    # Consider the rest of the activities
-    for i in range(1, len(activities)):
-        # If the start time of this activity is greater than or equal to
-        # the finish time of the previously selected activity, select it
-        if activities[i][1] >= last_finish_time:
-            selected.append(activities[i][0])
-            last_finish_time = activities[i][2]
-    
-    return selected
+// Function to swap two activities
+void swap(Activity *a, Activity *b) {
+    Activity temp = *a;
+    *a = *b;
+    *b = temp;
+}
 
-# Test cases
-if __name__ == "__main__":
-    # Example 1
-    start_times1 = [1, 3, 0, 5, 8, 5]
-    finish_times1 = [2, 4, 6, 7, 9, 9]
+// Function to sort activities by finish time using simple bubble sort
+// (You can replace this with qsort if desired)
+void sortActivities(Activity activities[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (activities[j].finish > activities[j + 1].finish) {
+                swap(&activities[j], &activities[j + 1]);
+            }
+        }
+    }
+}
+
+// Function to perform activity selection
+void activitySelection(int start_times[], int finish_times[], int n) {
+    Activity activities[n];
     
-    selected1 = activity_selection(start_times1, finish_times1)
-    print("Selected activities (indices):", selected1)
-    print("Number of activities selected:", len(selected1))
-    
-    # Example 2
-    start_times2 = [10, 12, 20]
-    finish_times2 = [20, 25, 30]
-    
-    selected2 = activity_selection(start_times2, finish_times2)
-    print("\nSelected activities (indices):", selected2)
-    print("Number of activities selected:", len(selected2))
+    // Combine start, finish, and index
+    for (int i = 0; i < n; i++) {
+        activities[i].index = i;
+        activities[i].start = start_times[i];
+        activities[i].finish = finish_times[i];
+    }
+
+    // Sort activities by finish time
+    sortActivities(activities, n);
+
+    printf("Selected activities (indices): ");
+
+    // Select the first activity
+    int last_finish_time = activities[0].finish;
+    printf("%d ", activities[0].index);
+
+    // Consider the rest of the activities
+    for (int i = 1; i < n; i++) {
+        if (activities[i].start >= last_finish_time) {
+            printf("%d ", activities[i].index);
+            last_finish_time = activities[i].finish;
+        }
+    }
+    printf("\n");
+}
+
+// Main function with test cases
+int main() {
+    // Example 1
+    int start_times1[] = {1, 3, 0, 5, 8, 5};
+    int finish_times1[] = {2, 4, 6, 7, 9, 9};
+    int n1 = sizeof(start_times1) / sizeof(start_times1[0]);
+    printf("Example 1:\n");
+    activitySelection(start_times1, finish_times1, n1);
+
+    // Example 2
+    int start_times2[] = {10, 12, 20};
+    int finish_times2[] = {20, 25, 30};
+    int n2 = sizeof(start_times2) / sizeof(start_times2[0]);
+    printf("\nExample 2:\n");
+    activitySelection(start_times2, finish_times2, n2);
+
+    return 0;
+}
