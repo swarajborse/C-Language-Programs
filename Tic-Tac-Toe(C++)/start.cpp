@@ -1,157 +1,69 @@
 #include <iostream>
+#include <vector>
 using namespace std;
-int choice;
-bool draw = false;
-char board[3][3] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
-char turn = 'X';
-int row, column;
 
-void Display_Board()
-{
+int main() {
+    int rounds = 3; // Total rounds
+    cout << "=== Factorial Challenge (Best of 3) ===\n";
 
-    system("cls");
-    cout << endl
-         << endl;
-    cout << "\t\t******************************************************************************************\n\n";
-    cout << "\t\t =======  =======   =======  =======     ==        =======   =======    ======     =======" << endl;
-    cout << "\t\t    =        =     =            =       =  =      =             =      =      =    =" << endl;
-    cout << "\t\t    =        =    =             =      =    =    =              =     =        =   =" << endl;
-    cout << "\t\t    =        =    =             =     ========   =              =     =        =   =======" << endl;
-    cout << "\t\t    =        =    =             =    =        =  =              =     =        =   =" << endl;
-    cout << "\t\t    =        =     =            =   =          =  =             =      =      =    =" << endl;
-    cout << "\t\t    =     =======   =======     =  =            =  =======      =       ======     =======" << endl;
-    cout << "\n\n\t\t*******************************************************************************************";
-    cout << "\n\n\t\t\t\tPLAYER1 [X]\n";
-    cout << "\n\t\t\t\tPLAYER2 [O]\n\n\n";
+    for (int round = 1; round <= rounds; round++) {
+        int n;
+        cout << "\n--- Round " << round << " ---\n";
+        cout << "How many numbers do you want to enter? ";
+        cin >> n;
 
-    cout << "\t\t\t     |     |     " << endl;
-    cout << "\t\t\t  " << board[0][0] << "  |  " << board[0][1] << "  |  " << board[0][2] << "  \n";
-    cout << "\t\t\t_____|_____|_____" << endl;
-    cout << "\t\t\t     |     |     " << endl;
-    cout << "\t\t\t  " << board[1][0] << "  |  " << board[1][1] << "  |  " << board[1][2] << "  \n";
-    cout << "\t\t\t_____|_____|_____" << endl;
-    cout << "\t\t\t     |     |     " << endl;
-    cout << "\t\t\t  " << board[2][0] << "  |  " << board[2][1] << "  |  " << board[2][2] << "  \n";
-    cout << "\t\t\t     |     |     " << endl;
-}
-void Player_Turn()
-{
-    if (turn == 'X')
-        cout << "\n\tPLAYER1 [x] Turn :  ";
-    if (turn == 'O')
-        cout << "\n\tPLAYER2 [O] Turn :  ";
-    cin >> choice;
-    switch (choice)
-    {
-    case 1:
-        row = 0;
-        column = 0;
-        break;
-    case 2:
-        row = 0;
-        column = 1;
-        break;
-    case 3:
-        row = 0;
-        column = 2;
-        break;
-    case 4:
-        row = 1;
-        column = 0;
-        break;
-    case 5:
-        row = 1;
-        column = 1;
-        break;
-    case 6:
-        row = 1;
-        column = 2;
-        break;
-    case 7:
-        row = 2;
-        column = 0;
-        break;
-    case 8:
-        row = 2;
-        column = 1;
-        break;
-    case 9:
-        row = 2;
-        column = 2;
-        break;
-    default:
-        cout << "\nInvalid choice\n ";
-        break;
-    }
-    if (turn == 'X' && board[row][column] != 'X' && board[row][column] != 'O')
-    {
-        board[row][column] = 'X';
-        turn = 'O';
-    }
-    else if (turn == 'O' && board[row][column] != 'X' && board[row][column] != 'O')
-    {
-        board[row][column] = 'O';
-        turn = 'X';
-    }
-    else
-    {
-        cout << "BOX IS ALREADY FILL PLEASE TRY AGAIN ";
-        Player_Turn();
-    }
-    Display_Board();
-}
-bool Game_Over()
-{
-    // if check win
-
-    for (int i = 0; i < 3; i++)
-        if (board[i][0] == board[i][1] && board[i][0] == board[i][2] || board[0][i] == board[1][i] && board[0][i] == board[2][i])
-            return false;
-
-    if (board[0][0] == board[1][1] && board[0][0] == board[2][2] || board[0][2] == board[1][1] && board[0][2] == board[2][0])
-        return false;
-
-    // if there is only box not filled
-    for (int i = 0; i < 3; i++)
-        for (int j = 0; j < 3; j++)
-            if (board[i][j] != 'X' && board[i][j] != 'O')
-                return true;
-
-    // draw
-    draw = true;
-    return false;
-}
-
-int main()
-{
-    char ch;
-    do
-    {
-        while (Game_Over())
-        {
-            Display_Board();
-            Player_Turn();
-            Game_Over();
+        if (n <= 0) {
+            cout << "Invalid input! Number of entries must be positive.\n";
+            continue; // Skip invalid round
         }
 
-        if (turn == 'X' && draw == false)
-        {
-            cout << "PLAYER2 [O] WINS !! congratulations \n";
+        vector<int> numbers(n);
+        vector<unsigned long long> factorials(n);
+
+        // Input numbers
+        for (int i = 0; i < n; i++) {
+            cout << "Enter number " << i + 1 << ": ";
+            cin >> numbers[i];
         }
-        else if (turn == 'O' && draw == false)
-        {
-            cout << "PLAYER1 [x] WINS !! congratulations \n";
+
+        // Calculate factorials
+        for (int i = 0; i < n; i++) {
+            if (numbers[i] < 0) {
+                factorials[i] = 0; // Not defined
+            } else {
+                factorials[i] = 1;
+                for (int j = 1; j <= numbers[i]; j++) {
+                    factorials[i] *= j;
+                }
+            }
         }
+
+        // Display results
+        cout << "\nResults for Round " << round << ":\n";
+        unsigned long long highest = 0;
+        int winnerIndex = -1;
+
+        for (int i = 0; i < n; i++) {
+            if (numbers[i] < 0)
+                cout << "Factorial of " << numbers[i] << " is not defined.\n";
+            else {
+                cout << "Factorial of " << numbers[i] << " = " << factorials[i] << "\n";
+                if (factorials[i] > highest) {
+                    highest = factorials[i];
+                    winnerIndex = i;
+                }
+            }
+        }
+
+        // Announce round winner
+        if (winnerIndex != -1)
+            cout << "\nWinner of Round " << round << ": Number " 
+                 << numbers[winnerIndex] << " with factorial " << highest << "!\n";
         else
-        {
-            cout << "GAME DRAW !! \n";
-        }
-        cout << "\n"
-             << endl;
-        //cout << "Want to Play Again (y/n) :" << endl;
-        //cin >> ch;
-        char board[3][3] = {{'1', '2', '3'}, {'4', '5', '6'}, {'7', '8', '9'}};
-    } while (ch=='y');
-    cout<<"END\n";
+            cout << "\nNo valid numbers entered this round.\n";
+    }
+
+    cout << "\n=== Game Over! All 3 rounds completed! ===\n";
+    cout << "Thanks for playing the Factorial Challenge \n";
     return 0;
 }
