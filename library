@@ -1,0 +1,213 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX 100
+
+struct Book {
+    int id;
+    char title[100];
+    char author[100];
+    int quantity;
+};
+
+void addBook();
+void displayBooks();
+void searchBook();
+void deleteBook();
+void updateBook();
+void saveToFile();
+void loadFromFile();
+
+struct Book library[MAX];
+int count = 0;
+
+int main() {
+    int choice;
+    loadFromFile();
+
+    do {
+        printf("\n========== LIBRARY MANAGEMENT SYSTEM ==========\n");
+        printf("1. Add Book\n");
+        printf("2. Display All Books\n");
+        printf("3. Search Book by Title\n");
+        printf("4. Delete Book\n");
+        printf("5. Update Book Info\n");
+        printf("6. Save & Exit\n");
+        printf("==============================================\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                addBook();
+                break;
+            case 2:
+                displayBooks();
+                break;
+            case 3:
+                searchBook();
+                break;
+            case 4:
+                deleteBook();
+                break;
+            case 5:
+                updateBook();
+                break;
+            case 6:
+                saveToFile();
+                printf("\nData saved successfully. Exiting...\n");
+                break;
+            default:
+                printf("\nInvalid choice! Try again.\n");
+        }
+    } while (choice != 6);
+
+    return 0;
+}
+
+void addBook() {
+    if (count >= MAX) {
+        printf("\nLibrary is full! Cannot add more books.\n");
+        return;
+    }
+
+    struct Book newBook;
+    printf("\nEnter Book ID: ");
+    scanf("%d", &newBook.id);
+    printf("Enter Book Title: ");
+    getchar(); // consume newline
+    fgets(newBook.title, 100, stdin);
+    newBook.title[strcspn(newBook.title, "\n")] = 0;
+
+    printf("Enter Author Name: ");
+    fgets(newBook.author, 100, stdin);
+    newBook.author[strcspn(newBook.author, "\n")] = 0;
+
+    printf("Enter Quantity: ");
+    scanf("%d", &newBook.quantity);
+
+    library[count++] = newBook;
+    printf("\nBook added successfully!\n");
+}
+
+void displayBooks() {
+    if (count == 0) {
+        printf("\nNo books available.\n");
+        return;
+    }
+
+    printf("\n%-5s %-30s %-30s %-10s\n", "ID", "Title", "Author", "Quantity");
+    printf("--------------------------------------------------------------------------\n");
+
+    for (int i = 0; i < count; i++) {
+        printf("%-5d %-30s %-30s %-10d\n", 
+                library[i].id, 
+                library[i].title, 
+                library[i].author, 
+                library[i].quantity);
+    }
+}
+
+void searchBook() {
+    char searchTitle[100];
+    int found = 0;
+    printf("\nEnter book title to search: ");
+    getchar();
+    fgets(searchTitle, 100, stdin);
+    searchTitle[strcspn(searchTitle, "\n")] = 0;
+
+    for (int i = 0; i < count; i++) {
+        if (strcasecmp(library[i].title, searchTitle) == 0) {
+            printf("\nBook found:\n");
+            printf("ID: %d\nTitle: %s\nAuthor: %s\nQuantity: %d\n",
+                   library[i].id, library[i].title, library[i].author, library[i].quantity);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("\nBook not found.\n");
+    }
+}
+
+void deleteBook() {
+    int id, found = 0;
+    printf("\nEnter book ID to delete: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++) {
+        if (library[i].id == id) {
+            found = 1;
+            for (int j = i; j < count - 1; j++) {
+                library[j] = library[j + 1];
+            }
+            count--;
+            printf("\nBook deleted successfully.\n");
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("\nBook ID not found.\n");
+    }
+}
+
+void updateBook() {
+    int id, found = 0;
+    printf("\nEnter Book ID to update: ");
+    scanf("%d", &id);
+
+    for (int i = 0; i < count; i++) {
+        if (library[i].id == id) {
+            found = 1;
+            printf("\nEnter new title: ");
+            getchar();
+            fgets(library[i].title, 100, stdin);
+            library[i].title[strcspn(library[i].title, "\n")] = 0;
+
+            printf("Enter new author: ");
+            fgets(library[i].author, 100, stdin);
+            library[i].author[strcspn(library[i].author, "\n")] = 0;
+
+            printf("Enter new quantity: ");
+            scanf("%d", &library[i].quantity);
+
+            printf("\nBook details updated successfully.\n");
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("\nBook not found.\n");
+    }
+}
+
+void saveToFile() {
+    FILE *fp = fopen("library_data.txt", "w");
+    if (!fp) {
+        printf("\nError saving file.\n");
+        return;
+    }
+
+    for (int i = 0; i < count; i++) {
+        fprintf(fp, "%d|%s|%s|%d\n", library[i].id, library[i].title, library[i].author, library[i].quantity);
+    }
+    fclose(fp);
+}
+
+void loadFromFile() {
+    FILE *fp = fopen("library_data.txt", "r");
+    if (!fp) return;
+
+    while (fscanf(fp, "%d|%99[^|]|%99[^|]|%d\n",
+                  &library[count].id,
+                  library[count].title,
+                  library[count].author,
+                  &library[count].quantity) == 4) {
+        count++;
+    }
+
+    fclose(fp);
+}
