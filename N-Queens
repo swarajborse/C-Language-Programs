@@ -1,0 +1,85 @@
+/**
+ * Program Name: N-Queens Solver
+ *
+ * Problem Statement:
+ * Place N queens on an N×N chessboard such that no two queens attack each other.
+ * Return all distinct board configurations, where 'Q' represents a queen and '.' represents an empty space.
+ *
+ * Example Input / Output:
+ * Input: n = 4
+ * Output:
+ * [
+ *   [".Q..",
+ *    "...Q",
+ *    "Q...",
+ *    "..Q."],
+ *
+ *   ["..Q.",
+ *    "Q...",
+ *    "...Q",
+ *    ".Q.."]
+ * ]
+ *
+ * Complexity:
+ * Time Complexity: O(N!)
+ * Space Complexity: O(N^2)
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char ***res;
+int resSize;
+int *colSizes;
+int *queens;
+int N;
+
+int isSafe(int row, int col) {
+    for (int i = 0; i < row; i++) {
+        if (queens[i] == col || abs(queens[i] - col) == abs(i - row))
+            return 0;
+    }
+    return 1;
+}
+
+void addSolution() {
+    char **board = (char **)malloc(N * sizeof(char *));
+    for (int i = 0; i < N; i++) {
+        board[i] = (char *)malloc((N + 1) * sizeof(char));
+        for (int j = 0; j < N; j++)
+            board[i][j] = (queens[i] == j) ? 'Q' : '.';
+        board[i][N] = '\0';
+    }
+    res[resSize++] = board;
+}
+
+void backtrack(int row) {
+    if (row == N) {
+        addSolution();
+        return;
+    }
+    for (int col = 0; col < N; col++) {
+        if (isSafe(row, col)) {
+            queens[row] = col;
+            backtrack(row + 1);
+        }
+    }
+}
+
+char ***solveNQueens(int n, int *returnSize, int **returnColumnSizes) {
+    N = n;
+    res = (char ***)malloc(10000 * sizeof(char **));
+    queens = (int *)malloc(N * sizeof(int));
+    resSize = 0;
+
+    backtrack(0);
+
+    *returnSize = resSize;
+    *returnColumnSizes = (int *)malloc(resSize * sizeof(int));
+    for (int i = 0; i < resSize; i++)
+        (*returnColumnSizes)[i] = N;
+
+    free(queens);
+    return res;
+}
