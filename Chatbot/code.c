@@ -20,7 +20,7 @@ void trimNewline(char *str) {
 int searchFAQ(const char *input) {
     FILE *file = fopen(FAQ_FILE, "r");
     if (!file) {
-        printf("FAQ file not found.\n");
+        printf("FAQ files not found.\n");
         return 0;
     }
 
